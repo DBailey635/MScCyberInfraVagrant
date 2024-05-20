@@ -35,10 +35,10 @@ sudo apt -y install libfuse2
 echo "### Install SSL"
 sudo apt -y install libssl
 
-echo "### Install NodeRed"
-sudo apt -y install nodejs
-sudo apt -y install npm
-sudo npm install -g --unsafe-perm node-red
+#echo "### Install NodeRed"
+#sudo apt -y install nodejs
+#sudo apt -y install npm
+#sudo npm install -g --unsafe-perm node-red
 
 echo "### Install NMAP"
 sudo apt -y install nmap
@@ -46,6 +46,7 @@ sudo apt -y install nmap
 echo "### Install Snaps"
 sudo snap install snap-store
 sudo snap install firefox
+sudo snap install node-red
 
 echo "### Install Python Modules"
 su vagrant -c "pip3 install python-snap7"
