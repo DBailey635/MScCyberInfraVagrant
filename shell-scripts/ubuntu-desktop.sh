@@ -36,7 +36,9 @@ echo "### Install SSL"
 sudo apt -y install libssl
 
 echo "### Install NodeRed"
-sudo apt -y install nodered
+sudo apt -y install nodejs
+sudo apt -y install npm
+sudo npm install -g --unsafe-perm node-red
 
 echo "### Install NMAP"
 sudo apt -y install nmap
