@@ -2,15 +2,23 @@
 
 # Make user vagrant an administrator:
 sudo usermod -aG sudo vagrant
+
 # Create the vagrant user home directory:
 sudo mkhomedir_helper vagrant
+
 # Update and install missing software:
 echo "### Updater"
 sudo apt -y update
+
 echo "### Install GIT"
 sudo apt -y install git
+
+echo "### Install Python 3"
+sudo apt -y install python3
+
 echo "### Install Python 3 PIP"
 sudo apt -y install python3-pip
+
 echo "### Install Python 3 Developer"
 sudo apt -y install python3-dev
     
@@ -52,6 +60,6 @@ git clone https://github.com/mz-automation/libiec61850
 # su vagrant -c "make install"
 
 echo "### All Done!"
-echo "I am G$(whoami)!"
+echo "### I am G$(whoami)!"
 
 reboot
