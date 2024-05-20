@@ -1,0 +1,91 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrant multi-machine sample setup
+Vagrant.configure("2") do |config|
+  config.vm.define :kali do |kali|
+    kali.vm.box = "kalilinux/rolling"
+    kali.vm.box_check_update = false
+    kali.vm.network :private_network, ip: "10.0.0.12"
+    kali.vm.hostname = "p2-kali"
+    kali.vm.provider "virtualbox" do |vb|
+      vb.name = "Project 2 Kali 2024 Rolling"
+      vb.gui = true
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", 128]
+    end
+    kali.vm.provider "vmware_workstation" do |vmw|
+      vmw.gui = true
+      vmw.memory = 4096
+      vmw.cpus = 2
+    end
+    kali.vm.provision "shell", inline: <<-SHELL
+      # Make user vagrant an administrator:
+      sudo usermod -aG sudo vagrant
+      # Create the vagrant user home directory:
+      sudo mkhomedir_helper vagrant
+      # Update and install missing software:
+      sudo apt update
+      sudo apt -y install git
+      sudo apt -y install alacarte python3-pip python3-dev
+      
+      echo "I am G$(whoami)."
+      
+      su vagrant -c "pip3 install pymodbus"
+      su vagrant -c "pip3 install python-snap7"
+      su vagrant -c "pip3 install pylogix"
+      
+      echo "I am G$(whoami)!"
+
+      cd /home/vagrant
+      mkdir ICS
+      
+      cd ICS
+      mkdir Assets
+      mkdir Exploit_kits
+      mkdir Tools
+      mkdir Python3_lib
+      
+      cd Assets
+      git clone https://github.com/digitalbond/Redpoint
+      git clone https://github.com/moki-ics/modscan
+      git clone https://github.com/moki-ics/plcscan
+      
+      cd ../Exploit_kits
+      mkdir ISEF
+      mkdir IEF
+      git clone https://github.com/w3h/isf ISEF
+      git clone https://github.com/dark-lbp/isf IEF
+
+      cd ../Tools
+      git clone https://github.com/tijldeneut/icssecurityscripts
+      git clone https://github.com/keyvdir/pyiec61850
+
+      cd ../Python3_lib
+      git clone https://github.com/mz-automation/libiec61850
+      # cd libiec61850
+      # su vagrant -c "make examples"
+      # su vagrant -c "make install"
+    SHELL
+  end
+
+  config.vm.define :metasploitable3 do |metasploitable3|
+    metasploitable3.vm.box = "rapid7/metasploitable3-ub1404"
+    metasploitable3.vm.box_version = "0.1.12-weekly"
+    metasploitable3.vm.box_check_update = false
+    metasploitable3.vm.network :private_network, ip: "10.0.0.13"
+    metasploitable3.vm.hostname = "p2-metasploitable3"
+    metasploitable3.vm.provider "virtualbox" do |vb|
+      vb.name = "Project 2 Metasploitable 3 Ubuntu 14.04"
+      vb.gui = false
+      vb.memory = 1024
+      vb.cpus = 1
+    end
+    metasploitable3.vm.provider "vmware_workstation" do |vmw|
+      vmw.gui = false
+      vmw.memory = 1024
+      vmw.cpus = 1
+    end
+  end
+end

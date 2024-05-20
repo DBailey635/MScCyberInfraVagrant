@@ -1,0 +1,73 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "kalilinux/rolling"
+  config.vm.box_check_update = false
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "public_network"
+  # config.vm.synced_folder "../data", "/vagrant_data"
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "Kali 2024 Rolling"
+    vb.gui = true
+    vb.memory = 4096
+    vb.cpus = 2
+  end
+  config.vm.provider "vmware_workstation" do |vmw|
+    vmw.gui = true
+    vmw.memory = 4096
+    vmw.cpus = 2
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    # Make user vagrant an administrator:
+    sudo usermod -aG sudo vagrant
+    # Create the vagrant user home directory:
+    sudo mkhomedir_helper vagrant
+    # Update and install missing software:
+    sudo apt update
+    sudo apt -y install git
+    sudo apt -y install alacarte python3-pip python3-dev
+    
+    echo "I am G$(whoami)."
+    
+    su vagrant -c "pip3 install pymodbus"
+    su vagrant -c "pip3 install python-snap7"
+    su vagrant -c "pip3 install pylogix"
+    
+    echo "I am G$(whoami)!"
+
+    cd /home/vagrant
+    mkdir ICS
+    
+    cd ICS
+    mkdir Assets
+    mkdir Exploit_kits
+    mkdir Tools
+    mkdir Python3_lib
+    
+    cd Assets
+    git clone https://github.com/digitalbond/Redpoint
+    git clone https://github.com/moki-ics/modscan
+    git clone https://github.com/moki-ics/plcscan
+    
+    cd ../Exploit_kits
+    mkdir ISEF
+    mkdir IEF
+    git clone https://github.com/w3h/isf ISEF
+    git clone https://github.com/dark-lbp/isf IEF
+
+    cd ../Tools
+    git clone https://github.com/tijldeneut/icssecurityscripts
+    git clone https://github.com/keyvdir/pyiec61850
+
+    cd ../Python3_lib
+    git clone https://github.com/mz-automation/libiec61850
+    # cd libiec61850
+    # su vagrant -c "make examples"
+    # su vagrant -c "make install"
+  SHELL
+end

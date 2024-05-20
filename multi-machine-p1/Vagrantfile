@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrant multi-machine sample setup
+Vagrant.configure("2") do |config|
+  config.vm.define :alpha do |alpha|
+    alpha.vm.box = "bento/ubuntu-22.04"
+    alpha.vm.box_check_update = false
+    alpha.vm.network :private_network, ip: "10.0.0.10"
+    alpha.vm.hostname = "p1-alpha"
+    alpha.vm.provider "virtualbox" do |vb|
+      vb.name = "Project 1 Ubuntu 22.04 (Alpha)"
+      vb.gui = true
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", 128]
+    end
+    alpha.vm.provider "vmware_workstation" do |vmw|
+      vmw.gui = true
+      vmw.memory = 4096
+      vmw.cpus = 2
+    end
+  end
+
+  config.vm.define :beta do |beta|
+    beta.vm.box = "bento/ubuntu-22.04"
+    beta.vm.box_check_update = false
+    beta.vm.network :private_network, ip: "10.0.0.11"
+    beta.vm.hostname = "p1-beta"
+    beta.vm.provider "virtualbox" do |vb|
+      vb.name = "Project 1 Ubuntu 22.04 (Beta)"
+      vb.gui = true
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vram", 128]
+    end
+    beta.vm.provider "vmware_workstation" do |vmw|
+      vmw.gui = true
+      vmw.memory = 4096
+      vmw.cpus = 2
+    end
+  end
+end
