@@ -30,6 +30,7 @@ Vagrant.configure("2") do |config|
     metasploitable3.ssh.password = "vagrant"
     metasploitable3.vm.box_check_update = false
     metasploitable3.vm.network :private_network, ip: "10.0.0.13"
+    metasploitable3.vm.synced_folder ".", "/vagrant", disabled: true
     metasploitable3.vm.hostname = "p2-metasploitable3"
     metasploitable3.vm.provider "virtualbox" do |vb|
       vb.name = "Project 2 Metasploitable 3 Ubuntu 14.04"
