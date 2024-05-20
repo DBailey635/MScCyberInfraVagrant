@@ -9,8 +9,6 @@ echo "### Updater"
 sudo apt -y update
 echo "### Install GIT"
 sudo apt -y install git
-echo "### Install Alacarte"
-sudo apt -y install alacarte
 echo "### Install Python 3 PIP"
 sudo apt -y install python3-pip
 echo "### Install Python 3 Developer"
