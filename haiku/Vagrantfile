@@ -72,6 +72,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     pkgman add https://eu.hpkg.haiku-os.org/haiku/r1beta4/$(getarch)/current
     pkgman full-sync
-    shutdown -r
   SHELL
 end
