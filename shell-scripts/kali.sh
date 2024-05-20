@@ -1,11 +1,12 @@
-# This shell script installs the default specialist softare for the MSc Cyber Security course. 
+# This shell script installs the default specialist softare for the MSc Cyber Security course into Kali VMs. 
 
 # Make user vagrant an administrator:
 sudo usermod -aG sudo vagrant
 # Create the vagrant user home directory:
 sudo mkhomedir_helper vagrant
 # Update and install missing software:
-sudo apt update
+echo "### Updater"
+sudo apt -y update
 echo "### Install GIT"
 sudo apt -y install git
 echo "### Install Alacarte"
@@ -54,3 +55,5 @@ git clone https://github.com/mz-automation/libiec61850
 
 echo "### All Done!"
 echo "I am G$(whoami)!"
+
+reboot
