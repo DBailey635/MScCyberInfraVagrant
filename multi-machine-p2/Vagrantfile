@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     kali.vm.box_check_update = false
     kali.vm.network :private_network, ip: "10.0.0.12"
     kali.vm.hostname = "p2-kali"
+    kali.vm.synced_folder "../data", "/vagrant_data"
     kali.vm.provider "virtualbox" do |vb|
       vb.name = "Project 2 Kali 2024 Rolling"
       vb.gui = true
@@ -20,7 +21,7 @@ Vagrant.configure("2") do |config|
       vmw.memory = 4096
       vmw.cpus = 2
     end
-    kali.vm.provision "shell", path: "../shell-scripts/kali.sh"
+    kali.vm.provision "shell", path: "../data/shell-scripts/kali.sh"
   end
 
   config.vm.define :metasploitable3 do |metasploitable3|

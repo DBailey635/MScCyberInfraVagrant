@@ -4,12 +4,12 @@
 # Vagrant multi-machine sample setup
 Vagrant.configure("2") do |config|
   config.vm.define :alpha do |alpha|
-    alpha.vm.box = "bento/ubuntu-22.04"
+    alpha.vm.box = "bento/ubuntu-24.04"
     alpha.vm.box_check_update = false
     alpha.vm.network :private_network, ip: "10.0.0.10"
     alpha.vm.hostname = "p1-alpha"
     alpha.vm.provider "virtualbox" do |vb|
-      vb.name = "Project 1 Ubuntu 22.04 (Alpha)"
+      vb.name = "Project 1 Ubuntu 24.04 (Alpha)"
       vb.gui = true
       vb.memory = 4096
       vb.cpus = 2
@@ -23,12 +23,12 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :beta do |beta|
-    beta.vm.box = "bento/ubuntu-22.04"
+    beta.vm.box = "bento/ubuntu-24.04"
     beta.vm.box_check_update = false
     beta.vm.network :private_network, ip: "10.0.0.11"
     beta.vm.hostname = "p1-beta"
     beta.vm.provider "virtualbox" do |vb|
-      vb.name = "Project 1 Ubuntu 22.04 (Beta)"
+      vb.name = "Project 1 Ubuntu 24.04 (Beta)"
       vb.gui = true
       vb.memory = 4096
       vb.cpus = 2
