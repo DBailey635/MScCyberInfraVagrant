@@ -54,6 +54,6 @@ su vagrant -c "pip3 install pymodbus"
 su vagrant -c "pip3 install notebook"
     
 echo "### All Done!"
-echo "### I am G$(whoami)!"
+echo "### I am G$(whoami)! Reboot"
     
 reboot

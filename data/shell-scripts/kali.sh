@@ -6,6 +6,10 @@ sudo usermod -aG sudo vagrant
 # Create the vagrant user home directory:
 sudo mkhomedir_helper vagrant
 
+# Fix broken public key
+echo "### Fix broken public key (if required)"
+sudo wget https://archive.kali.org/archive-keyring.gpg \ -O /usr/share/keyrings/kali-archive-keyring.gpg
+
 # Update and install missing software:
 echo "### Updater"
 sudo apt -y update
@@ -60,6 +64,6 @@ git clone https://github.com/mz-automation/libiec61850
 # su vagrant -c "make install"
 
 echo "### All Done!"
-echo "### I am G$(whoami)!"
+echo "### I am G$(whoami)! Reboot"
 
 reboot
